@@ -1,0 +1,40 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: e
+      MYSQL_DATABASE: e-commerce
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
+    networks:
+      - ecommerce-network
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8081:8080"
+    networks:
+      - ecommerce-network
+
+#  api:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile  # Assuming your Dockerfile is named "Dockerfile"
+#    ports:
+#      - "5001:8080"
+#    depends_on:
+#      - db
+#    restart: always
+#    networks:
+#      - ecommerce-network
+
+
+networks:
+  ecommerce-network:
